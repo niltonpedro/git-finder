@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
 import logoImage from '../../assets/logo.svg';
 import api from '../../services/api';
@@ -18,17 +18,30 @@ interface Repository {
 const Dashboard: React.FC = () => {
   const [newRepo, setNewRepo] = useState('');
   const [inputError, setInputError] = useState('');
-  const [repositories, setRepositories] = useState<Repository[]>([]);
+  const [repositories, setRepositories] = useState<Repository[]>(() => {
+    const storagedRepositories = localStorage.getItem('@gitSearch:Repositories')
+
+    if (storagedRepositories) {
+      return JSON.parse(storagedRepositories)
+    }
+    else {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem('@gitSearch:Repositories', JSON.stringify(repositories))
+  }, [repositories])
 
   async function handleAddRepository(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
 
-    if(!newRepo) {
+    if (!newRepo) {
       setInputError('Insira autor/nome do repositório');
       return;
     }
 
-    try{
+    try {
       const response = await api.get<Repository>(`repos/${newRepo}`)
 
       const repository = response.data;
@@ -36,7 +49,7 @@ const Dashboard: React.FC = () => {
       setRepositories([...repositories, repository])
       setNewRepo('')
       setInputError('');
-    } catch(error){
+    } catch (error) {
       setInputError('Erro ao buscar o repositório inserido');
     }
 
@@ -61,17 +74,17 @@ const Dashboard: React.FC = () => {
       <Repositories>
         {repositories.map(repository => (
           <a key={repository.full_name} href="teste">
-          <img
-            src={repository.owner.avatar_url}
-            alt={repository.owner.login}
-          />
-          <div>
-            <strong>{repository.full_name}</strong>
-            <p>{repository.description}</p>
-          </div>
+            <img
+              src={repository.owner.avatar_url}
+              alt={repository.owner.login}
+            />
+            <div>
+              <strong>{repository.full_name}</strong>
+              <p>{repository.description}</p>
+            </div>
 
-          <FiChevronRight size={20} />
-        </a>
+            <FiChevronRight size={20} />
+          </a>
         ))}
       </Repositories>
     </>

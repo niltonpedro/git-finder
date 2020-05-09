@@ -5,6 +5,12 @@ interface FormProps {
   hasError: boolean;
 }
 
+export const Header = styled.header`
+  display: flex;
+`;
+
+
+
 export const Title = styled.h1`
   font-size: 48px;
   color: #3a3a3a;

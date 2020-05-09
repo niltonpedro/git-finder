@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import logoImage from '../../assets/logo.svg';
 import api from '../../services/api';
 
-import { Title, Form, Repositories, Error } from './styles';
+import { Title, Form, Repositories, Error, Header } from './styles';
 
 interface Repository {
   full_name: string;
@@ -58,7 +58,9 @@ const Dashboard: React.FC = () => {
 
   return (
     <>
-      <img src={logoImage} alt="logo" />
+      <Header>
+        <img src={logoImage} alt="logo" />
+      </Header>
       <Title> Explore repositórios pelo Github </Title>
 
       <Form hasError={!!inputError} onSubmit={handleAddRepository}>

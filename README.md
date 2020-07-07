@@ -15,7 +15,9 @@
 ## Descrição do projeto
 
 <p align="justify">
-  Projeto com o objetivo de explorar os repositórios disponíveis na API aberta do github
+  Projeto desenvolvido em React com Typescript, utilizando as melhores práticas. Ele tem o objetivo de explorar os repositórios disponíveis na API aberta do github. O usuário deve adiconar o usuário seguido do repositório que deseja listar. Quando um repositório é adicionado, ao clicar no mesmo, o usuário sera redirecionado para outra página em que poderá visualizar detalhes desse repositório como o número de estrelas, forks e uma lista das issues abertas, que quando clicadas, o usuário é redirecionado para a página da Issue no site do github.
+  
+  > Exemplo de input: facebook/react
 </p>
 
 # Aplicação
